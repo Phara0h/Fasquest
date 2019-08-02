@@ -1,0 +1,35 @@
+{
+  "name": "fastrequest",
+  "version": "1.0.0",
+  "description": "A fast node request module",
+  "main": "index.js",
+  "scripts":
+  {
+    "test": "jest --detectOpenHandles"
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "git+https://github.com/Phara0h/FastRequest.git"
+  },
+  "keywords": [
+    "request",
+    "http",
+    "https",
+    "rest",
+    "fast",
+    "native"
+  ],
+  "author": "Jt Whissel",
+  "license": "GPL-3.0-or-later",
+  "bugs":
+  {
+    "url": "https://github.com/Phara0h/FastRequest/issues"
+  },
+  "homepage": "https://github.com/Phara0h/FastRequest#readme",
+  "devDependencies":
+  {
+    "fastify": "^2.7.1",
+    "jest": "^24.8.0"
+  }
+}
