@@ -35,7 +35,7 @@ class RequestError extends Error
   }
 }
 
-class FastRequest
+class Fasquest
 {
   constructor()
   {}
@@ -169,4 +169,4 @@ class FastRequest
     return options;
   }
 }
-module.exports = new FastRequest();
+module.exports = new Fasquest();

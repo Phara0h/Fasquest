@@ -1,7 +1,7 @@
-describe('Fast Request', () =>
+describe('Fasquest', () =>
 {
   var server;
-  var fastRequest = require('../index.js')
+  var fasquest = require('../index.js')
   var options = {
     uri: 'http://127.0.0.1:1237/',
     resolveWithFullResponse: true,
@@ -18,7 +18,7 @@ describe('Fast Request', () =>
   {
     test('Simple Get', async () =>
     {
-      var res = await fastRequest.request(options)
+      var res = await fasquest.request(options)
       console.log(res.body)
       expect(1).toBe(1);
     })
@@ -29,7 +29,7 @@ describe('Fast Request', () =>
         foo: "foo",
         bar: "bar"
       }
-      var res = await fastRequest.request(options)
+      var res = await fasquest.request(options)
       expect(res.body.query).toEqual(options.qs);
     })
 
