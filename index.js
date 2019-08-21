@@ -1,5 +1,5 @@
 const qs = require('querystring');
-
+const url = require('url');
 const client = {
   https: require('https'),
   http: require('http'),
@@ -15,6 +15,8 @@ const agent = {
     keepAlive: true
   })
 };
+
+const REDIRECT_CODES = [301, 302, 303, 307];
 
 class SimpleError extends Error
 {
@@ -84,10 +86,13 @@ class Fasquest
     });
   }
 
-  _request(options, cb)
+  _request(ops, cb, count = 0)
   {
-    options = this._setOptions(options);
-
+    var options =  this._setOptions({...ops});
+    if (options.body)
+    {
+      options.headers['Content-Length'] = Buffer.byteLength(JSON.stringify(options.body));
+    }
     var req = client[options.proto].request(options.uri, options, (res) =>
     {
       res.body = '';
@@ -100,19 +105,28 @@ class Fasquest
         // remove as causes circular references
         delete options.agent;
 
-        if (res.headers['content-type'] && res.headers['content-type'].indexOf('json') > -1)
+        if(REDIRECT_CODES.indexOf(res.statusCode) !== -1 && count < options.redirect_max)
         {
-          res.body = JSON.parse(res.body);
+            options.uri = url.resolve(options.uri,res.headers.location);
+            options.proto = options.uri.split(':')[0];
+            return this._request(this._setOptions(options), cb, ++count);
         }
-        if (options.simple)
-        {
-          if (res.statusCode > 299 || res.statusCode < 200)
+        else {
+          if (res.headers['content-type'] && res.headers['content-type'].indexOf('json') > -1)
           {
-            return cb(req, res, new SimpleError());
+            res.body = JSON.parse(res.body);
           }
+          if (options.simple)
+          {
+            if (res.statusCode > 299 || res.statusCode < 200)
+            {
+              return cb(req, res, new SimpleError());
+            }
+          }
+
+          return cb(req, res, null);
         }
 
-        return cb(req, res, null);
       });
     });
 
@@ -126,6 +140,7 @@ class Fasquest
 
     if (options.body)
     {
+      options.headers['Content-Length'] = Buffer.byteLength(JSON.stringify(options.body));
       req.write(options.json ? JSON.stringify(options.body) : options.body);
     }
 
@@ -164,6 +179,10 @@ class Fasquest
       options.body = qs.stringify(options.form);
       options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
       options.headers['Content-Length'] = Buffer.byteLength(options.body);
+    }
+    if(!options.redirect_max)
+    {
+      options.redirect_max = 5;
     }
 
     return options;
