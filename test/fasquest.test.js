@@ -46,7 +46,7 @@ describe('Fasquest', () =>
     test('Benchmark', async () =>
     {
       var opts={...options}
-      opts.uri = opts.uri+'bench';
+      opts.uri = opts.uri;
 
       var startTime = process.hrtime.bigint();
       for (var i = 0; i < 10000; ++i) {

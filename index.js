@@ -180,6 +180,16 @@ class Fasquest
       options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
       options.headers['Content-Length'] = Buffer.byteLength(options.body);
     }
+    if(options.authorization) {
+      if(options.authorization.basic) {
+        options.headers['Authorization'] = 'Basic '+((options.authorization.basic.client+':'+options.authorization.basic.secret).toString('base64'));
+      }
+      else if(options.authorization.bearer) {
+        options.headers['Authorization'] = 'Bearer '+options.authorization.bearer;
+      }
+      delete options.authorization;
+    }
+
     if(!options.redirect_max)
     {
       options.redirect_max = 5;
