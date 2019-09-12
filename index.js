@@ -89,7 +89,7 @@ class Fasquest
   _request(ops, cb, count = 0)
   {
     var options =  this._setOptions({...ops});
-    if (options.body)
+    if (options.body && !options.headers['Content-Length'])
     {
       options.headers['Content-Length'] = Buffer.byteLength(JSON.stringify(options.body));
     }
@@ -140,7 +140,6 @@ class Fasquest
 
     if (options.body)
     {
-      options.headers['Content-Length'] = Buffer.byteLength(JSON.stringify(options.body));
       req.write(options.json ? JSON.stringify(options.body) : options.body);
     }
 
@@ -182,13 +181,15 @@ class Fasquest
     }
     if(options.authorization) {
       if(options.authorization.basic) {
-        options.headers['Authorization'] = 'Basic '+((options.authorization.basic.client+':'+options.authorization.basic.secret).toString('base64'));
+        options.headers['Authorization'] = 'Basic '+Buffer.from(options.authorization.basic.client+':'+options.authorization.basic.secret, 'ascii').toString('base64');
       }
       else if(options.authorization.bearer) {
         options.headers['Authorization'] = 'Bearer '+options.authorization.bearer;
       }
+
       delete options.authorization;
     }
+
 
     if(!options.redirect_max)
     {

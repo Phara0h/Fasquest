@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v1.2.1](https://github.com/Phara0h/Fasquest/compare/v1.2.0...v1.2.1)
+
+> 12 September 2019
+
+- 1.2.1 Fixed content-length bug [`00f6b9d`](https://github.com/Phara0h/Fasquest/commit/00f6b9db1405e655d2300948745a486acf305e95)
+
 #### v1.2.0
 
 > 11 September 2019
