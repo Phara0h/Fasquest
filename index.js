@@ -114,7 +114,14 @@ class Fasquest
         else {
           if (res.headers['content-type'] && res.headers['content-type'].indexOf('json') > -1)
           {
-            res.body = JSON.parse(res.body);
+            try
+            {
+              res.body = JSON.parse(res.body);
+            }
+            catch (e)
+            {
+              // do nothing 
+            }
           }
           if (options.simple)
           {
