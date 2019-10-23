@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v1.2.3](https://github.com/Phara0h/Fasquest/compare/v1.2.2...v1.2.3)
+
+> 23 October 2019
+
+- Protect against response body not being able to be parsed [`#1`](https://github.com/Phara0h/Fasquest/pull/1)
+
+#### [v1.2.2](https://github.com/Phara0h/Fasquest/compare/v1.2.1...v1.2.2)
+
+> 12 September 2019
+
+- 1.2.2 Fixed content-length bug [`fb48137`](https://github.com/Phara0h/Fasquest/commit/fb481374c1779fcaac886ba5aabb77fe3cb9cfaf)
+
 #### [v1.2.1](https://github.com/Phara0h/Fasquest/compare/v1.2.0...v1.2.1)
 
 > 12 September 2019
