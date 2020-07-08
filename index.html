@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  
+  </head>
+  <body>
+    <script type="module">
+      import Fasquest from "./dist/index.mjs";
+      console.log(Fasquest)
+      async function test() {
+        try {
+          const tests = await Fasquest.request({
+            uri: 'http://127.0.0.1:1237/',
+            simple : false
+          })
+          console.log(tests)
+        } catch(e) {
+          console.error(e)
+        }
+
+      }
+      test();
+    </script>
+  </body>
+</html>

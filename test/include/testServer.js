@@ -1,5 +1,26 @@
 
-  var fastify = require('fastify')()
+  var fastify = require('fastify')();
+
+  fastify.use((req, res, next) => {
+
+      if (req.headers['origin']) {
+          res.setHeader('access-control-allow-origin', req.headers['origin']);
+      }
+
+      if (req.headers['access-control-request-method']) {
+          res.setHeader('access-control-allow-methods',  req.headers['access-control-request-method'] || '*');
+      }
+
+      if (req.headers['access-control-request-headers']) {
+          res.setHeader('access-control-allow-headers', req.headers['access-control-request-headers'] || '*');
+      }
+      next();
+  });
+  fastify.options('/*', (req, res) => {
+
+      res.header('access-control-max-age', 6400);
+      res.code(204).send();
+  });
 
   fastify.post('/', function (req, reply)
   {
@@ -20,7 +41,7 @@
       raw,
       ...r
     } = req;
-    console.log(r)
+  
     reply.code(200).send(r);
   })
 

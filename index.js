@@ -52,7 +52,6 @@ class Fasquest
     {
       this._request(options, (err, req, res) =>
       {
-        const connection = res.info || res.connection;
         reject(
         {
           req,
@@ -93,7 +92,8 @@ class Fasquest
     {
       options.headers['Content-Length'] = Buffer.byteLength(JSON.stringify(options.body));
     }
-    var req = client[options.proto].request(options.uri, options, (res) =>
+
+    var req = client[options.proto].request(options, (res,b,c) =>
     {
       res.body = '';
       res.on('data', (chunk) =>
@@ -108,7 +108,7 @@ class Fasquest
         if(REDIRECT_CODES.indexOf(res.statusCode) !== -1 && count < options.redirect_max)
         {
             options.uri = url.resolve(options.uri,res.headers.location);
-            options.proto = options.uri.split(':')[0];
+
             return this._request(this._setOptions(options), cb, ++count);
         }
         else {
@@ -120,7 +120,7 @@ class Fasquest
             }
             catch (e)
             {
-              // do nothing 
+              // do nothing
             }
           }
           if (options.simple)
@@ -155,7 +155,8 @@ class Fasquest
 
   _setOptions(options)
   {
-    options.proto = options.proto || options.uri.split(':')[0];
+
+
 
     options.simple = options.simple !== false;
 
@@ -168,6 +169,7 @@ class Fasquest
         options.uri += (options.uri.indexOf('?') > -1 ? '&' : '?') + escQS;
       }
     }
+    this._uri_to_options(options);
 
     options.agent = options.agent || agent[options.proto];
 
@@ -205,5 +207,49 @@ class Fasquest
 
     return options;
   }
+
+  _uri_to_options(options) {
+
+    var convertedUri = {
+      proto: '',
+      path: '/',
+      port: 80,
+      host: ''
+    }
+    var splitURI = options.uri.split('://');
+    convertedUri.proto = splitURI[0];
+
+    if(splitURI[1].indexOf(':') > -1){
+      const port_host = splitURI[1].split(':');
+      const pindex = port_host[1].indexOf('/');
+      if(pindex > -1) {
+        splitURI[1] = port_host[1]
+        convertedUri.path = splitURI[1].slice(pindex);
+        convertedUri.port = splitURI[1].slice(0,pindex);
+      } else {
+          convertedUri.port = port_host[1];
+      }
+      convertedUri.host = port_host[0];
+
+    }
+    else {
+      convertedUri.port = convertedUri.proto == 'https' ? 443 : 80;
+    }
+
+    const hostIndex = splitURI[1].indexOf('/')
+    if(hostIndex > -1) {
+      convertedUri.path = convertedUri.path ||splitURI[1].slice(hostIndex);
+      convertedUri.host = convertedUri.host || splitURI[1].slice(0,hostIndex);
+    } else {
+      convertedUri.path = convertedUri.path || '/';
+      convertedUri.host = convertedUri.host || splitURI[1];
+    }
+
+    options.proto = convertedUri.proto;
+    options.path = convertedUri.path;
+    options.port = convertedUri.port;
+    options.host = convertedUri.host;
+  }
 }
+
 module.exports = new Fasquest();

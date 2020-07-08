@@ -65,7 +65,6 @@ describe('Fasquest', () =>
       try {
         var res = await fasquest.request(opts)
 
-        console.log(res)
       } catch (e) {
         console.trace(e)
       } finally {
