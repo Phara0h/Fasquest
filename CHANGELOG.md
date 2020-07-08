@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v2.0.1](https://github.com/Phara0h/Fasquest/compare/v2.0.0...v2.0.1)
+
+> 8 July 2020
+
+- Update package.json [`15ededc`](https://github.com/Phara0h/Fasquest/commit/15ededcbb5a7e75a3121c23e824a9e98aace2d0c)
+
 ### [v2.0.0](https://github.com/Phara0h/Fasquest/compare/v1.2.3...v2.0.0)
 
 > 8 July 2020
