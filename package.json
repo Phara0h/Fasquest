@@ -15,12 +15,9 @@
     "import": "./dist/index.mjs",
     "require": "./index.js"
   },
-  "files": [
-    "./index.js"
-  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Phara0h/FastRequest.git"
+    "url": "git+https://github.com/Phara0h/Fasquest.git"
   },
   "keywords": [
     "request",
@@ -33,9 +30,9 @@
   "author": "Jt Whissel",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/Phara0h/FastRequest/issues"
+    "url": "https://github.com/Phara0h/Fasquest/issues"
   },
-  "homepage": "https://github.com/Phara0h/FastRequest#readme",
+  "homepage": "https://github.com/Phara0h/Fasquest#readme",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^13.0.0",
     "auto-changelog": "^1.16.1",
