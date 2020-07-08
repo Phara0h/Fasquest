@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v2.0.2](https://github.com/Phara0h/Fasquest/compare/v2.0.1...v2.0.2)
+
+> 8 July 2020
+
+- Fixed bug with redirect [`638ace1`](https://github.com/Phara0h/Fasquest/commit/638ace1883f9ead950e7eac61cc904f168fb394c)
+
 #### [v2.0.1](https://github.com/Phara0h/Fasquest/compare/v2.0.0...v2.0.1)
 
 > 8 July 2020
