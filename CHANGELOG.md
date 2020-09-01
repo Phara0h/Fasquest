@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v2.1.1](https://github.com/Phara0h/Fasquest/compare/v2.1.0...v2.1.1)
+
+> 1 September 2020
+
+- Update index.mjs [`1188bb9`](https://github.com/Phara0h/Fasquest/commit/1188bb9c74d4b61ad02ade54d39f294b00b34c02)
+
 #### [v2.1.0](https://github.com/Phara0h/Fasquest/compare/v2.0.2...v2.1.0)
 
 > 1 September 2020
