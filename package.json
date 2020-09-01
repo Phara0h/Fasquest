@@ -35,13 +35,13 @@
   "homepage": "https://github.com/Phara0h/Fasquest#readme",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^13.0.0",
-    "auto-changelog": "^1.16.1",
+    "auto-changelog": "^2.2.0",
     "fastify": "^2.15.1",
     "jest": "^24.8.0",
+    "mdsquash": "^1.0.5",
     "rollup": "^2.21.0",
     "rollup-plugin-babel-minify": "^10.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-polyfills": "^0.2.1",
-    "mdsquash": "^1.0.5"
+    "rollup-plugin-node-polyfills": "^0.2.1"
   }
 }
