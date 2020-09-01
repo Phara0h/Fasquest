@@ -12,8 +12,7 @@ const Fasquest = require('fasquest');
 
 var options = {
   uri: 'http://127.0.0.1/',
-  resolveWithFullResponse: true,
-  json: true
+  resolveWithFullResponse: true
 }
 
 Fasquest.request(options).then(res=>{
@@ -28,11 +27,15 @@ Fasquest.request(options).then(res=>{
 import Fasquest from "fasquest";
 var options = {
   uri: 'http://127.0.0.1/',
-  resolveWithFullResponse: true,
-  json: true
+  resolveWithFullResponse: true
 }
 
 await Fasquest.request(options);
 
 
 ```
+
+
+## Changelog
+
+{{doc1}}

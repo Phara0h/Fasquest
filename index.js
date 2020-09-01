@@ -31,8 +31,8 @@ class Fasquest {
     if (!cb) {
       return this.requestPromise(options);
     } else {
-      this._request(options, (err, req, res) => {
-        reject({
+      this._request(options, (req, res, err) => {
+        cb({
           req,
           res,
           err
@@ -59,8 +59,11 @@ class Fasquest {
     var options = this._setOptions({
       ...ops
     });
+    if(options.json && options.body) {
+      options.body = JSON.stringify(options.body);
+    }
     if (options.body && !options.headers['Content-Length']) {
-      options.headers['Content-Length'] = Buffer.byteLength(JSON.stringify(options.body));
+      options.headers['Content-Length'] = Buffer.byteLength(options.body);
     }
     var req = client[options.proto].request(options, (res) => {
       res.body = '';
@@ -96,7 +99,7 @@ class Fasquest {
       return cb(req, null, new RequestError(e))
     });
     if (options.body) {
-      req.write(options.json ? JSON.stringify(options.body) : options.body);
+      req.write(options.body);
     }
     req.end();
   }
@@ -118,6 +121,7 @@ class Fasquest {
       options.headers['Content-Type'] = 'application/json';
     } else if (options.form) {
       options.body = qs.stringify(options.form);
+      console.log(options.body)
       options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
       options.headers['Content-Length'] = Buffer.byteLength(options.body);
     }
@@ -129,7 +133,7 @@ class Fasquest {
       }
       delete options.authorization;
     }
-    if (!options.redirect_max) {
+    if (!options.redirect_max && options.redirect_max !== 0) {
       options.redirect_max = 5;
     }
     return options;
