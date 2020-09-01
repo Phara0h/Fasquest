@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v2.1.2](https://github.com/Phara0h/Fasquest/compare/v2.1.1...v2.1.2)
+
+> 1 September 2020
+
+- Added `npm publish` at the end of postversion [`7266053`](https://github.com/Phara0h/Fasquest/commit/7266053192c6973a0c45ecee381784ef19063420)
+
 #### [v2.1.1](https://github.com/Phara0h/Fasquest/compare/v2.1.0...v2.1.1)
 
 > 1 September 2020
