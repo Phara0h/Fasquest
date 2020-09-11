@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v2.2.0](https://github.com/Phara0h/Fasquest/compare/v2.1.2...v2.2.0)
+
+> 11 September 2020
+
+- Update index.mjs [`e5e037f`](https://github.com/Phara0h/Fasquest/commit/e5e037f7685f4c5b00aaecacff06bd833d002c0a)
+- Added timeout functionality and fixed error message names. [`9b7e593`](https://github.com/Phara0h/Fasquest/commit/9b7e593e7a9b029aa28b8e82db7cf6c3dbcdeb56)
+
 #### [v2.1.2](https://github.com/Phara0h/Fasquest/compare/v2.1.1...v2.1.2)
 
 > 1 September 2020
