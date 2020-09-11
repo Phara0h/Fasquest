@@ -22,9 +22,17 @@ class SimpleError extends Error {
 class RequestError extends Error {
   constructor(e) {
     super('Error happened reguarding a request: ' + e.message)
-    this.name = 'FR_Simple';
+    this.name = 'FR_Request_'+e.name;
   }
 }
+
+class RequestTimeoutError extends Error {
+  constructor(e) {
+    super('Error happened reguarding a request: ' + e.message)
+    this.name = 'FR_Request_Timeout';
+  }
+}
+
 class Fasquest {
   constructor() {}
   request(options, cb = null) {
@@ -65,11 +73,13 @@ class Fasquest {
     if (options.body && !options.headers['Content-Length']) {
       options.headers['Content-Length'] = Buffer.byteLength(options.body);
     }
+
     var req = client[options.proto].request(options, (res) => {
       res.body = '';
       res.on('data', (chunk) => {
         res.body += chunk;
       });
+
       res.on('end', () => {
         // remove as causes circular references
         delete options.agent;
@@ -93,10 +103,11 @@ class Fasquest {
         }
       });
     });
+    req.on('socket', (s) => { s.setTimeout(options.timeout || 60000, () => { s.destroy(new RequestTimeoutError({message:'Timeout'})); })});
     req.on('error', (e) => {
       // remove as causes circular references
       delete options.agent;
-      return cb(req, null, new RequestError(e))
+      return cb(req, null, e.name.indexOf('FR_') > -1 ? e : new RequestError(e) )
     });
     if (options.body) {
       req.write(options.body);
