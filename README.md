@@ -42,6 +42,12 @@ await Fasquest.request(options);
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v2.3.0](https://github.com/Phara0h/Fasquest/compare/v2.2.0...v2.3.0)
+
+> 12 September 2020
+
+- Fixed memory leak [`433d5b3`](https://github.com/Phara0h/Fasquest/commit/433d5b3a15a6a3447a0b96179bdf9e8397bf4cda)
+
 #### [v2.2.0](https://github.com/Phara0h/Fasquest/compare/v2.1.2...v2.2.0)
 
 > 11 September 2020
