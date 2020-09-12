@@ -76,11 +76,13 @@ class Fasquest {
 
     var req = client[options.proto].request(options, (res) => {
       res.body = '';
+
       res.on('data', (chunk) => {
         res.body += chunk;
       });
 
       res.on('end', () => {
+        clearTimeout(t);
         // remove as causes circular references
         delete options.agent;
         if (REDIRECT_CODES.indexOf(res.statusCode) !== -1 && count < options.redirect_max) {
@@ -103,11 +105,16 @@ class Fasquest {
         }
       });
     });
-    req.on('socket', (s) => { s.setTimeout(options.timeout || 60000, () => { s.destroy(new RequestTimeoutError({message:'Timeout'})); })});
+
+    var t = setTimeout(() => {
+      req.destroy();
+    },options.timeout || 60000)
+
     req.on('error', (e) => {
+      var err =  e.message.indexOf('socket hang up') > -1 ? new RequestTimeoutError(e) : new RequestError(e);
       // remove as causes circular references
       delete options.agent;
-      return cb(req, null, e.name.indexOf('FR_') > -1 ? e : new RequestError(e) )
+      return cb(req, null, err)
     });
     if (options.body) {
       req.write(options.body);
