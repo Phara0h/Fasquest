@@ -4,14 +4,7 @@ const client = {
   https: require('https'),
   http: require('http'),
 };
-const agent = {
-  http: new client.http.Agent({
-    keepAlive: true
-  }),
-  https: new client.https.Agent({
-    keepAlive: true
-  })
-};
+
 const REDIRECT_CODES = [301, 302, 303, 307];
 class SimpleError extends Error {
   constructor() {
@@ -34,7 +27,17 @@ class RequestTimeoutError extends Error {
 }
 
 class Fasquest {
-  constructor() {}
+  constructor() {
+    this.agent = {
+      http: new client.http.Agent({
+        keepAlive: true
+      }),
+      https: new client.https.Agent({
+        keepAlive: true
+      })
+    };
+
+  }
   request(options, cb = null) {
     if (!cb) {
       return this.requestPromise(options);
@@ -131,7 +134,7 @@ class Fasquest {
       }
     }
     this._uri_to_options(options);
-    options.agent = options.agent || agent[options.proto];
+    options.agent = options.agent || this.agent[options.proto];
     if (!options.headers) {
       options.headers = {};
     }
@@ -139,7 +142,7 @@ class Fasquest {
       options.headers['Content-Type'] = 'application/json';
     } else if (options.form) {
       options.body = qs.stringify(options.form);
-      console.log(options.body)
+
       options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
       options.headers['Content-Length'] = Buffer.byteLength(options.body);
     }
