@@ -42,9 +42,15 @@ await Fasquest.request(options);
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+### [v3.0.0](https://github.com/Phara0h/Fasquest/compare/v2.4.0...v3.0.0)
+
+> 22 September 2020
+
+- Fixed tests and fixed issue with options being mutated [`0e90d84`](https://github.com/Phara0h/Fasquest/commit/0e90d8475d91790f467d9882f624bacd70f0fdf8)
+
 #### [v2.4.0](https://github.com/Phara0h/Fasquest/compare/v2.3.0...v2.4.0)
 
-> 15 September 2020
+> 14 September 2020
 
 - added a way to set the agent [`25a8521`](https://github.com/Phara0h/Fasquest/commit/25a8521de09ba3aee70939d11b619af222fa2fb9)
 
