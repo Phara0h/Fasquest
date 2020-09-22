@@ -9,7 +9,7 @@ describe('Fasquest', () =>
 
   test('start server', async () =>
   {
-    //server = await require('./include/testServer.js')();
+    server = await require('./include/testServer.js')();
     expect(1).toBe(1);
   })
 

@@ -24,25 +24,39 @@
 
   fastify.post('/', function (req, reply)
   {
-    var
-    {
-      raw,
-      ...r
-    } = req;
 
-    reply.code(200).send(r);
+    reply.code(200).send({
+      body: req.body,
+      query: req.query,
+      params: req.params,
+      url: req.req.url,
+      method: req.raw.method,
+      headers: req.headers,
+      // raw: req.raw,
+      id: req.id,
+      ip: req.ip,
+      ips: req.ips,
+      hostname: req.hostname,
+    });
   })
 
   fastify.get('/', function (req, reply)
   {
 
-    var
-    {
-      raw,
-      ...r
-    } = req;
-  
-    reply.code(200).send(r);
+
+    reply.code(200).send({
+      body: req.body,
+      query: req.query,
+      params: req.params,
+      url: req.req.url,
+      method: req.raw.method,
+      headers: req.headers,
+      // raw: req.raw,
+      id: req.id,
+      ip: req.ip,
+      ips: req.ips,
+      hostname: req.hostname,
+    });
   })
 
   fastify.get('/bench', function (req, reply)
@@ -54,6 +68,10 @@
   fastify.get('/redirect', function (req, reply)
   {
 
-    reply.redirect('https://google.com')
+    reply.redirect('/bench')
   })
-  fastify.listen(1237)
+
+
+  module.exports = async function() {
+      await fastify.listen(1237);
+  }

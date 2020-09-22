@@ -67,15 +67,7 @@ class Fasquest {
     });
   }
   _request(ops, cb, count = 0) {
-    var options = this._setOptions({
-      ...ops
-    });
-    if(options.json && options.body) {
-      options.body = JSON.stringify(options.body);
-    }
-    if (options.body && !options.headers['Content-Length']) {
-      options.headers['Content-Length'] = Buffer.byteLength(options.body);
-    }
+    var options = this._setOptions(ops);
 
     var req = client[options.proto].request(options, (res) => {
       res.body = '';
@@ -87,12 +79,18 @@ class Fasquest {
       res.on('end', () => {
         clearTimeout(t);
         // remove as causes circular references
-        delete options.agent;
-        if (REDIRECT_CODES.indexOf(res.statusCode) !== -1 && count < options.redirect_max) {
+
+        if (
+          REDIRECT_CODES.indexOf(res.statusCode) !== -1 &&
+          count < options.redirect_max
+        ) {
           options.uri = url.resolve(options.uri, res.headers.location);
           return this._request(this._setOptions(options), cb, ++count);
         } else {
-          if (res.headers['content-type'] && res.headers['content-type'].indexOf('json') > -1) {
+          if (
+            res.headers['content-type'] &&
+            res.headers['content-type'].indexOf('json') > -1
+          ) {
             try {
               res.body = JSON.parse(res.body);
             } catch (e) {
@@ -111,68 +109,96 @@ class Fasquest {
 
     var t = setTimeout(() => {
       req.destroy();
-    },options.timeout || 60000)
+    }, options.timeout || 60000);
 
     req.on('error', (e) => {
-      var err =  e.message.indexOf('socket hang up') > -1 ? new RequestTimeoutError(e) : new RequestError(e);
-      // remove as causes circular references
-      delete options.agent;
-      return cb(req, null, err)
+      var err =
+        e.message.indexOf('socket hang up') > -1
+          ? new RequestTimeoutError(e)
+          : new RequestError(e);
+
+      return cb(req, null, err);
     });
+
     if (options.body) {
       req.write(options.body);
     }
     req.end();
   }
-  _setOptions(options) {
-    options.simple = options.simple !== false;
-    options.method = options.method || 'GET';
-    if (options.qs) {
-      var escQS = qs.stringify(options.qs);
+  _setOptions(opts) {
+    var options = {};
+
+    options.simple = opts.simple !== false;
+    options.method = opts.method || 'GET';
+    options.uri = opts.uri;
+    if (opts.qs) {
+      var escQS = qs.stringify(opts.qs);
+
       if (escQS.length > 0) {
         options.uri += (options.uri.indexOf('?') > -1 ? '&' : '?') + escQS;
       }
     }
-    this._uri_to_options(options);
-    options.agent = options.agent || this.agent[options.proto];
-    if (!options.headers) {
-      options.headers = {};
+    options = this._uri_to_options(options.uri, options);
+    options.agent = opts.agent || this.agent[opts.proto];
+    options.headers = {};
+    if (opts.headers) {
+      var h = Object.keys(opts.headers);
+
+      for (var i = 0; i < h.length; i++) {
+        options.headers[h[i]] = opts.headers[h[i]];
+      }
     }
-    if (options.json) {
+    if (opts.json) {
       options.headers['Content-Type'] = 'application/json';
-    } else if (options.form) {
-      options.body = qs.stringify(options.form);
+      if (opts.body) {
+        options.body = JSON.stringify(opts.body);
+      }
+    } else if (opts.form) {
+      options.body = qs.stringify(opts.form);
 
       options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      options.headers['Content-Length'] = Buffer.byteLength(options.body);
+      options.headers['Content-Length'] = Buffer.byteLength(opts.body);
+    } else if (opts.body) {
+      options.headers['Content-Length'] = Buffer.byteLength(opts.body);
+      options.body = opts.body;
     }
-    if (options.authorization) {
-      if (options.authorization.basic) {
-        options.headers['Authorization'] = 'Basic ' + Buffer.from(options.authorization.basic.client + ':' + options.authorization.basic.secret, 'ascii').toString('base64');
-      } else if (options.authorization.bearer) {
-        options.headers['Authorization'] = 'Bearer ' + options.authorization.bearer;
+    if (opts.authorization) {
+      if (opts.authorization.basic) {
+        options.headers['Authorization'] =
+          'Basic ' +
+          Buffer.from(
+            opts.authorization.basic.client +
+              ':' +
+              opts.authorization.basic.secret,
+            'ascii'
+          ).toString('base64');
+      } else if (opts.authorization.bearer) {
+        options.headers['Authorization'] =
+          'Bearer ' + opts.authorization.bearer;
       }
-      delete options.authorization;
     }
-    if (!options.redirect_max && options.redirect_max !== 0) {
+    if (!opts.redirect_max && opts.redirect_max !== 0) {
       options.redirect_max = 5;
     }
+
     return options;
   }
-  _uri_to_options(options) {
+  _uri_to_options(uri, options) {
     var convertedUri = {
       proto: '',
       path: '',
       port: 80,
       host: ''
-    }
-    var splitURI = options.uri.split('://');
+    };
+    var splitURI = uri.split('://');
+
     convertedUri.proto = splitURI[0];
     if (splitURI[1].indexOf(':') > -1) {
       const port_host = splitURI[1].split(':');
       const pindex = port_host[1].indexOf('/');
+
       if (pindex > -1) {
-        splitURI[1] = port_host[1]
+        splitURI[1] = port_host[1];
         convertedUri.path = splitURI[1].slice(pindex);
         convertedUri.port = splitURI[1].slice(0, pindex);
       } else {
@@ -182,7 +208,8 @@ class Fasquest {
     } else {
       convertedUri.port = convertedUri.proto == 'https' ? 443 : 80;
     }
-    const hostIndex = splitURI[1].indexOf('/')
+    const hostIndex = splitURI[1].indexOf('/');
+
     if (hostIndex > -1) {
       convertedUri.path = convertedUri.path || splitURI[1].slice(hostIndex);
       convertedUri.host = convertedUri.host || splitURI[1].slice(0, hostIndex);
@@ -194,6 +221,7 @@ class Fasquest {
     options.path = convertedUri.path;
     options.port = convertedUri.port;
     options.host = convertedUri.host;
+    return options;
   }
 }
 module.exports = new Fasquest();

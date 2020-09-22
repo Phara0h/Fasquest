@@ -4,7 +4,7 @@
   "description": "A fast node request model, works very similar to `request` module but way faster and no dependencies.",
   "main": "./index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest  --forceExit",
     "version": "auto-changelog -l false --sort-commits date-desc --package --hide-credit --template changelog-template.hbs -p && mdsquash -i  CHANGELOG.md && git add -A CHANGELOG.md && git add -A README.md",
     "postversion": "git push &&  git push --tags && npm publish",
     "build": "rollup -c"
