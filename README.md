@@ -42,6 +42,12 @@ await Fasquest.request(options);
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v3.0.1](https://github.com/Phara0h/Fasquest/compare/v3.0.0...v3.0.1)
+
+> 20 October 2020
+
+- Fixed issue with timeouts, removed default timeout logic if no timeout is set in options [`5113537`](https://github.com/Phara0h/Fasquest/commit/5113537ebf0a096fb42eafb1d5ffea835bf0a128)
+
 ### [v3.0.0](https://github.com/Phara0h/Fasquest/compare/v2.4.0...v3.0.0)
 
 > 22 September 2020
