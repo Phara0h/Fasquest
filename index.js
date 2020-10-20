@@ -77,7 +77,9 @@ class Fasquest {
       });
 
       res.on('end', () => {
-        clearTimeout(t);
+        if(options.timeout) {
+          clearTimeout(t);
+        }
         // remove as causes circular references
 
         if (
@@ -107,9 +109,11 @@ class Fasquest {
       });
     });
 
-    var t = setTimeout(() => {
-      req.destroy();
-    }, options.timeout || 60000);
+    if(options.timeout) {
+      var t = setTimeout(() => {
+        req.destroy();
+      }, options.timeout || 60000);
+    }
 
     req.on('error', (e) => {
       var err =
