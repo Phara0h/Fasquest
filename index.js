@@ -161,7 +161,7 @@ class Fasquest {
       options.body = qs.stringify(opts.form);
 
       options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      options.headers['Content-Length'] = Buffer.byteLength(opts.body);
+      options.headers['Content-Length'] = Buffer.byteLength(options.body);
     } else if (opts.body) {
       options.headers['Content-Length'] = Buffer.byteLength(opts.body);
       options.body = opts.body;
