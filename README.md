@@ -42,6 +42,12 @@ await Fasquest.request(options);
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v3.0.2](https://github.com/Phara0h/Fasquest/compare/v3.0.1...v3.0.2)
+
+> 5 February 2021
+
+- fix [`a4a0518`](https://github.com/Phara0h/Fasquest/commit/a4a051842b627a244a7389eaf33133f48fa7bde4)
+
 #### [v3.0.1](https://github.com/Phara0h/Fasquest/compare/v3.0.0...v3.0.1)
 
 > 20 October 2020
