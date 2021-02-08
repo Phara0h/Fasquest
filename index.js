@@ -191,44 +191,45 @@ class Fasquest {
     return options;
   }
   _uri_to_options(uri, options) {
-    var convertedUri = {
-      proto: '',
-      path: '',
-      port: 80,
-      host: ''
-    };
-    var splitURI = uri.split('://');
+      var convertedUri = {
+          proto: '',
+          path: '',
+          port: 80,
+          host: '',
+      };
+      var splitURI = uri.split('://');
 
-    convertedUri.proto = splitURI[0];
-    if (splitURI[1].indexOf(':') > -1) {
-      const port_host = splitURI[1].split(':');
-      const pindex = port_host[1].indexOf('/');
+      convertedUri.proto = splitURI[0];
+      var possiblePort = splitURI[1].indexOf(':');
 
-      if (pindex > -1) {
-        splitURI[1] = port_host[1];
-        convertedUri.path = splitURI[1].slice(pindex);
-        convertedUri.port = splitURI[1].slice(0, pindex);
+      if (possiblePort > -1 && !isNaN(splitURI[1][possiblePort + 1])) {
+          const pindex = splitURI[1].indexOf('/');
+
+          if (pindex > -1) {
+              convertedUri.path = splitURI[1].slice(pindex);
+              convertedUri.port = splitURI[1].slice(possiblePort + 1, pindex);
+
+          } else {
+              convertedUri.port = splitURI[1].slice(possiblePort + 1);
+          }
+          convertedUri.host = splitURI[1].slice(0, possiblePort);
       } else {
-        convertedUri.port = port_host[1];
+          convertedUri.port = convertedUri.proto == 'https' ? 443 : 80;
       }
-      convertedUri.host = port_host[0];
-    } else {
-      convertedUri.port = convertedUri.proto == 'https' ? 443 : 80;
-    }
-    const hostIndex = splitURI[1].indexOf('/');
+      const hostIndex = splitURI[1].indexOf('/');
 
-    if (hostIndex > -1) {
-      convertedUri.path = convertedUri.path || splitURI[1].slice(hostIndex);
-      convertedUri.host = convertedUri.host || splitURI[1].slice(0, hostIndex);
-    } else {
-      convertedUri.path = convertedUri.path || '/';
-      convertedUri.host = convertedUri.host || splitURI[1];
-    }
-    options.proto = convertedUri.proto;
-    options.path = convertedUri.path;
-    options.port = convertedUri.port;
-    options.host = convertedUri.host;
-    return options;
+      if (hostIndex > -1) {
+          convertedUri.path = convertedUri.path || splitURI[1].slice(hostIndex);
+          convertedUri.host = convertedUri.host || splitURI[1].slice(0, hostIndex);
+      } else {
+          convertedUri.path = convertedUri.path || '/';
+          convertedUri.host = convertedUri.host || splitURI[1];
+      }
+      options.proto = convertedUri.proto;
+      options.path = convertedUri.path;
+      options.port = convertedUri.port;
+      options.host = convertedUri.host;
+      return options;
   }
 }
 module.exports = new Fasquest();
