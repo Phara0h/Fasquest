@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v3.1.1](https://github.com/Phara0h/Fasquest/compare/v3.1.0...v3.1.1)
+
+> 8 February 2021
+
+- Fixed bug with urls with `:` in their path [`f123cfa`](https://github.com/Phara0h/Fasquest/commit/f123cfaa0e359f8848d005fce0c1324024f95374)
+
 #### [v3.1.0](https://github.com/Phara0h/Fasquest/compare/v3.0.2...v3.1.0)
 
 > 8 February 2021
