@@ -164,6 +164,9 @@ class Fasquest {
       options.headers['Content-Length'] = Buffer.byteLength(options.body);
     } else if (opts.body) {
       options.headers['Content-Length'] = Buffer.byteLength(opts.body);
+      if (!options.headers['Content-Type']) {
+          options.headers['Content-Type'] = 'text/plain';
+      }
       options.body = opts.body;
     }
     if (opts.authorization) {
