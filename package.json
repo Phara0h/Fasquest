@@ -1,6 +1,6 @@
 {
   "name": "fasquest",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "A fast node request model, works very similar to `request` module but way faster and no dependencies.",
   "main": "./index.js",
   "scripts": {
