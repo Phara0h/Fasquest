@@ -39,7 +39,7 @@
     "fastify": "^2.15.1",
     "jest": "^24.8.0",
     "mdsquash": "^1.0.5",
-    "rollup": "^2.21.0",
+    "rollup": "^3.29.4",
     "rollup-plugin-babel-minify": "^10.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-polyfills": "^0.2.1"
