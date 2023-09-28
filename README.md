@@ -1,46 +1,10 @@
-# Fasquest
-A fast node request model, works very similar to `request` module but way faster and no dependencies + it works in the browser!
-
-### Install
-```
-npm install fasquest
-```
-
-### Basic Node Example
-```js
-const Fasquest = require('fasquest');
-
-var options = {
-  uri: 'http://127.0.0.1/',
-  resolveWithFullResponse: true
-}
-
-Fasquest.request(options).then(res=>{
-  console.log('hey look I got a response')
-})
-
-
-```
-
-### Basic Web Example
-```js
-import Fasquest from "fasquest";
-var options = {
-  uri: 'http://127.0.0.1/',
-  resolveWithFullResponse: true
-}
-
-await Fasquest.request(options);
-
-
-```
-
-
-## Changelog
-
 ### Changelog
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
+
+#### [v3.1.3](https://github.com/Phara0h/Fasquest/compare/v3.1.2...v3.1.3)
+
+- Updated rollup which fixed the mjs version [`c49a66b`](https://github.com/Phara0h/Fasquest/commit/c49a66bcee78b7e8a58682080a37e7856444302d)
 
 #### [v3.1.2](https://github.com/Phara0h/Fasquest/compare/v3.1.1...v3.1.2)
 
@@ -164,4 +128,5 @@ All notable changes to this project will be documented in this file. Dates are d
 - Init commit [`c4511ab`](https://github.com/Phara0h/Fasquest/commit/c4511ab8c6be5cd1629fa0a83a59cb310fb9c7d9)
 - Update README.md [`2353cdc`](https://github.com/Phara0h/Fasquest/commit/2353cdcf1f6b3abc56a46959da8901d9de973706)
 - Initial commit [`39a43e3`](https://github.com/Phara0h/Fasquest/commit/39a43e342161ce97f492a30169c446b29d5f3bf7)
+ 
 

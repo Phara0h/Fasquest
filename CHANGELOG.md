@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v3.1.3](https://github.com/Phara0h/Fasquest/compare/v3.1.2...v3.1.3)
+
+- Updated rollup which fixed the mjs version [`c49a66b`](https://github.com/Phara0h/Fasquest/commit/c49a66bcee78b7e8a58682080a37e7856444302d)
+
 #### [v3.1.2](https://github.com/Phara0h/Fasquest/compare/v3.1.1...v3.1.2)
 
 > 18 April 2022
