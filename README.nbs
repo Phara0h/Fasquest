@@ -36,6 +36,56 @@ await Fasquest.request(options);
 ```
 
 
+
+### Options
+- `uri` (string): The URL to make the request to.
+- `method` (string): The HTTP method to use (default: 'GET').
+- `qs` (object): An object containing query string parameters to be appended to the URL.
+- `headers` (object): An object containing request headers.
+- `body` (string|object): The body of the request. If `json` is set to true, this should be an object.
+- `json` (boolean): If true, sets the `Content-Type` header to `application/json` and stringifies the body.
+- `form` (object): An object containing form data. Sets the `Content-Type` header to `application/x-www-form-urlencoded`.
+- `timeout` (number): The number of milliseconds to wait for a response before timing out.
+- `resolveWithFullResponse` (boolean): If true, the full response object is returned, otherwise only the response body is returned.
+- `simple` (boolean): If true, only resolves the promise if the status code is 2xx otherwise throws an error.
+- `authorization` (object): An object containing authorization information. Supports `basic` and `bearer` tokens.
+- `redirect_max` (number): The maximum number of redirects to follow (default: 5).
+- `agent` (object): An object containing custom HTTP/HTTPS agents.
+
+#### Example with Options
+```js
+const Fasquest = require('fasquest');
+
+var options = {
+  uri: 'http://127.0.0.1/',
+  method: 'POST',
+  qs: { key1: 'value1', key2: 'value2' },
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ key: 'value' }),
+  json: true,
+  form: { key: 'value' },
+  timeout: 5000,
+  resolveWithFullResponse: true,
+  simple: false,
+  authorization: { bearer: 'token' },
+  redirect_max: 10,
+  agent: { http: new http.Agent(), https: new https.Agent() }
+}
+
+Fasquest.request(options).then(res=>{
+  console.log('Response:', res)
+}).catch(err=>{
+  console.error('Error:', err)
+})
+```
+
+### Possible Errors
+- `FR_Simple`: Thrown when the `simple` option is true and the response status code is not 2xx.
+- `FR_Request_<ErrorName>`: Thrown when there is an error with the request. `<ErrorName>` will be replaced with the specific error name.
+- `FR_Request_Timeout`: Thrown when the request times out.
+
+
+
 ## Changelog
 
 {{doc1}}
