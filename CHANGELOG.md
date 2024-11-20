@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v3.1.5](https://github.com/Phara0h/Fasquest/compare/v3.1.5...v3.1.5)
+
+- Update package.json [`63b8da5`](https://github.com/Phara0h/Fasquest/commit/63b8da58314f88cc846ce4599c01afc12aa623af)
+
 #### [v3.1.5](https://github.com/Phara0h/Fasquest/compare/v3.1.2...v3.1.5)
+
+> 20 November 2024
 
 - Update package.json [`1644210`](https://github.com/Phara0h/Fasquest/commit/16442107879116cdc481576247490f15c87dc4f3)
 - Added back docs [`78186ad`](https://github.com/Phara0h/Fasquest/commit/78186ad23cc271af7073cb94cfa44fe1222c5edc)
