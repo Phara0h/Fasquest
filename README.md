@@ -1,9 +1,101 @@
+# Fasquest
+A fast node request model, works very similar to `request` module but way faster and no dependencies + it works in the browser!
+
+### Install
+```
+npm install fasquest
+```
+
+### Basic Node Example
+```js
+const Fasquest = require('fasquest');
+
+var options = {
+  uri: 'http://127.0.0.1/',
+  resolveWithFullResponse: true
+}
+
+Fasquest.request(options).then(res=>{
+  console.log('hey look I got a response')
+})
+
+
+```
+
+### Basic Web Example
+```js
+import Fasquest from "fasquest";
+var options = {
+  uri: 'http://127.0.0.1/',
+  resolveWithFullResponse: true
+}
+
+await Fasquest.request(options);
+
+
+```
+
+
+
+### Options
+- `uri` (string): The URL to make the request to.
+- `method` (string): The HTTP method to use (default: 'GET').
+- `qs` (object): An object containing query string parameters to be appended to the URL.
+- `headers` (object): An object containing request headers.
+- `body` (string|object): The body of the request. If `json` is set to true, this should be an object.
+- `json` (boolean): If true, sets the `Content-Type` header to `application/json` and stringifies the body.
+- `form` (object): An object containing form data. Sets the `Content-Type` header to `application/x-www-form-urlencoded`.
+- `timeout` (number): The number of milliseconds to wait for a response before timing out.
+- `resolveWithFullResponse` (boolean): If true, the full response object is returned, otherwise only the response body is returned.
+- `simple` (boolean): If true, only resolves the promise if the status code is 2xx otherwise throws an error.
+- `authorization` (object): An object containing authorization information. Supports `basic` and `bearer` tokens.
+- `redirect_max` (number): The maximum number of redirects to follow (default: 5).
+- `agent` (object): An object containing custom HTTP/HTTPS agents.
+
+#### Example with Options
+```js
+const Fasquest = require('fasquest');
+
+var options = {
+  uri: 'http://127.0.0.1/',
+  method: 'POST',
+  qs: { key1: 'value1', key2: 'value2' },
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ key: 'value' }),
+  json: true,
+  form: { key: 'value' },
+  timeout: 5000,
+  resolveWithFullResponse: true,
+  simple: false,
+  authorization: { bearer: 'token' },
+  redirect_max: 10,
+  agent: { http: new http.Agent(), https: new https.Agent() }
+}
+
+Fasquest.request(options).then(res=>{
+  console.log('Response:', res)
+}).catch(err=>{
+  console.error('Error:', err)
+})
+```
+
+### Possible Errors
+- `FR_Simple`: Thrown when the `simple` option is true and the response status code is not 2xx.
+- `FR_Request_<ErrorName>`: Thrown when there is an error with the request. `<ErrorName>` will be replaced with the specific error name.
+- `FR_Request_Timeout`: Thrown when the request times out.
+
+
+
+## Changelog
+
 ### Changelog
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
-#### [v3.1.3](https://github.com/Phara0h/Fasquest/compare/v3.1.2...v3.1.3)
+#### [v3.1.5](https://github.com/Phara0h/Fasquest/compare/v3.1.2...v3.1.5)
 
+- Update package.json [`1644210`](https://github.com/Phara0h/Fasquest/commit/16442107879116cdc481576247490f15c87dc4f3)
+- Added back docs [`78186ad`](https://github.com/Phara0h/Fasquest/commit/78186ad23cc271af7073cb94cfa44fe1222c5edc)
 - Updated rollup which fixed the mjs version [`c49a66b`](https://github.com/Phara0h/Fasquest/commit/c49a66bcee78b7e8a58682080a37e7856444302d)
 
 #### [v3.1.2](https://github.com/Phara0h/Fasquest/compare/v3.1.1...v3.1.2)
@@ -128,5 +220,4 @@ All notable changes to this project will be documented in this file. Dates are d
 - Init commit [`c4511ab`](https://github.com/Phara0h/Fasquest/commit/c4511ab8c6be5cd1629fa0a83a59cb310fb9c7d9)
 - Update README.md [`2353cdc`](https://github.com/Phara0h/Fasquest/commit/2353cdcf1f6b3abc56a46959da8901d9de973706)
 - Initial commit [`39a43e3`](https://github.com/Phara0h/Fasquest/commit/39a43e342161ce97f492a30169c446b29d5f3bf7)
- 
 
